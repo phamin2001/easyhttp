@@ -9,8 +9,6 @@ easyHTTP.prototype.get = function (url, callback) {
   let self = this;
 
   this.http.onload = function () {
-    console.log(self.http.status);
-    
     if (self.http.status === 200) {
       callback(null, self.http.responseText);
     } else {
@@ -22,7 +20,19 @@ easyHTTP.prototype.get = function (url, callback) {
 };
 
 // Make any HTTP POST Request
+easyHTTP.prototype.post = function (url, data, callback) {
+  this.http.open('POST', url, true);
+  this.http.setRequestHeader('Content-Type', 'application/json');
+
+  let self = this;
+  this.http.onload = function () {
+    callback(null, self.http.responseText);
+  };
+
+  this.http.send(JSON.stringify(data));
+};
 
 // Make any HTTP PUT Request
+
 
 // Make any HTTP DELETE Request
